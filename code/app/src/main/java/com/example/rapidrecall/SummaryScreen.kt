@@ -21,7 +21,7 @@ fun SummaryScreen(session: GameSession, onBack: () -> Unit) {
     ) {
         Text("Total Attempts: ${session.total}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
         Text("Correct Attempts: ${session.correct}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
-        Text("Accuracy: ${session.accuracy}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+        Text("Accuracy: ${session.accuracy}%", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
         AppButton(onClick = onBack) { Text("Back to Main Menu", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
     }
 }

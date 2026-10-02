@@ -83,6 +83,8 @@ fun PlayScreen(length: Int, onFinished: () -> Unit, onPlayAgain: () -> Unit, ses
             }
         } else {
             Text(text = result, style = MaterialTheme.typography.headlineLarge, textAlign = TextAlign.Center)
+            Text(text = "Correct sequence: ${lastAttempt?.target.orEmpty()}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+            Text(text = "Your input: ${lastAttempt?.guess.orEmpty()}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
             AppButton(onClick = { onPlayAgain() }) {
                 Text("Play Again", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
             }
