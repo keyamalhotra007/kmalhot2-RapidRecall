@@ -2,14 +2,13 @@ package com.example.rapidrecall
 
 import androidx.compose.runtime.mutableStateListOf
 
-class GameSession : ObservableModel<GameSession>(){
+class GameSession{
     private val _attempts = mutableStateListOf<Attempt>()
 
     val attempts: List<Attempt> get() = _attempts.toList()
 
     fun addAttempt(attempt: Attempt) {
         _attempts.add(attempt)
-        notifyObservers(this)
     }
 
     fun record(sequence: DigitSequence, guess: String): Attempt {

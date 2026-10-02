@@ -15,21 +15,8 @@ import androidx.compose.runtime.setValue
 
 @Composable
 fun RapidRecallApp(session: GameSession) {
-    var attemptsState by remember { mutableStateOf(session.attempts) }
     var screen by remember { mutableStateOf("start") }
-
-    DisposableEffect(session) {
-        val observer = object : ViewObserver<GameSession> {
-            override fun update(model: GameSession) {
-                attemptsState = model.attempts
-            }
-        }
-        session.addObserver(observer)
-        onDispose { session.removeObserver(observer) }
-    }
-
     var sequenceLength by remember { mutableStateOf(0) }
-    val session = remember { GameSession() } // one session shared by all screens
     when (screen) { //check value of screen and return branch that matches
         "start" -> StartScreen(
             onStartGame = { screen = "setup" },
