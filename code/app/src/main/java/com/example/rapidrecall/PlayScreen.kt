@@ -27,71 +27,72 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 
-@Composable
-fun PlayScreen(length: Int, onFinished: () -> Unit, onPlayAgain: () -> Unit, session: GameSession) {
+class PlayScreen {
+    @Composable
+    fun Content(length: Int, onFinished: () -> Unit, onPlayAgain: () -> Unit, session: GameSession) {
 
-    val sequence by remember { mutableStateOf(DigitSequence(length)) }
+        val sequence by remember { mutableStateOf(DigitSequence(length)) }
 
-    var currentIndex by remember { mutableStateOf(0) }
-    var showingSequence by remember { mutableStateOf(true) }
-    var gameFinished by remember { mutableStateOf(false) }
-    val inputState = rememberTextFieldState()
-    var result by remember { mutableStateOf("") }
-    var lastAttempt by remember { mutableStateOf<Attempt?>(null) }
-    var showDigit by remember { mutableStateOf(false) }
+        var currentIndex by remember { mutableStateOf(0) }
+        var showingSequence by remember { mutableStateOf(true) }
+        var gameFinished by remember { mutableStateOf(false) }
+        val inputState = rememberTextFieldState()
+        var result by remember { mutableStateOf("") }
+        var lastAttempt by remember { mutableStateOf<Attempt?>(null) }
+        var showDigit by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        for (i in sequence.digits.indices) {
-            currentIndex = i
-            showDigit = true
-            delay(800)
-            showDigit = false
-            delay(300)
+        LaunchedEffect(Unit) {
+            for (i in sequence.digits.indices) {
+                currentIndex = i
+                showDigit = true
+                delay(800)
+                showDigit = false
+                delay(300)
+            }
+            showingSequence = false
         }
-        showingSequence = false
-    }
 
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (showingSequence) {
-            if (showDigit) {
-                Text(
-                    text = sequence.digits[currentIndex].toString(),
-                    style = MaterialTheme.typography.displayLarge,
-                    textAlign = TextAlign.Center
-                )
-            }
-        } else if (!gameFinished) {
-            OutlinedTextField(
-                state = inputState,
-                textStyle = MaterialTheme.typography.bodyLarge,
-                label = { Text("Enter Sequence", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center) },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-            AppButton(
-                onClick = {
-                    val attempt = session.record(sequence, inputState.text.toString())
-                    lastAttempt = attempt
-                    result = if (attempt.correct) "YOU WON!" else "YOU LOST!"
-                    gameFinished = true
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if (showingSequence) {
+                if (showDigit) {
+                    Text(
+                        text = sequence.digits[currentIndex].toString(),
+                        style = MaterialTheme.typography.displayLarge,
+                        textAlign = TextAlign.Center
+                    )
                 }
-            ) {
-                Text("Done", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
-            }
-        } else {
-            Text(text = result, style = MaterialTheme.typography.headlineLarge, textAlign = TextAlign.Center)
-            Text(text = "Correct sequence: ${lastAttempt?.target.orEmpty()}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
-            Text(text = "Your input: ${lastAttempt?.guess.orEmpty()}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
-            AppButton(onClick = { onPlayAgain() }) {
-                Text("Play Again", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
-            }
-            AppButton(onClick = { onFinished() }) {
-                Text("Back to Main Screen", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
+            } else if (!gameFinished) {
+                OutlinedTextField(
+                    state = inputState,
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    label = { Text("Enter Sequence", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center) },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+                AppButton(
+                    onClick = {
+                        val attempt = session.record(sequence, inputState.text.toString())
+                        lastAttempt = attempt
+                        result = if (attempt.correct) "YOU WON!" else "YOU LOST!"
+                        gameFinished = true
+                    }
+                ) {
+                    Text("Done", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
+                }
+            } else {
+                Text(text = result, style = MaterialTheme.typography.headlineLarge, textAlign = TextAlign.Center)
+                Text(text = "Correct sequence: ${lastAttempt?.target.orEmpty()}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+                Text(text = "Your input: ${lastAttempt?.guess.orEmpty()}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+                AppButton(onClick = { onPlayAgain() }) {
+                    Text("Play Again", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
+                }
+                AppButton(onClick = { onFinished() }) {
+                    Text("Back to Main Screen", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center)
+                }
             }
         }
     }
 }
-

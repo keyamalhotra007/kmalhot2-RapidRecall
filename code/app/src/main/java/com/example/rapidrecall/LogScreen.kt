@@ -23,53 +23,44 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-@Composable
-fun LogScreen(attempts: List<Attempt>, onBack: () -> Unit) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (attempts.isEmpty()) {
-            Text(text = "No attempts yet", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
-        } else {
-            LazyColumn(
-                modifier = Modifier.weight(1f).fillMaxWidth().padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                items(attempts) { attempt ->
-                    AttemptItemRow(attempt = attempt)
+class LogScreen {
+    @Composable
+    fun Content(attempts: List<Attempt>, onBack: () -> Unit) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            if (attempts.isEmpty()) {
+                Text(text = "No attempts yet", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+            } else {
+                LazyColumn(
+                    modifier = Modifier.weight(1f).fillMaxWidth().padding(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    items(attempts) { attempt ->
+                        AttemptItemRow(attempt = attempt)
+                    }
                 }
             }
-        }
-        AppButton(onClick = onBack) {
-            Text(
-                "Back to Main Menu",
-                style = MaterialTheme.typography.labelLarge,
-                textAlign = TextAlign.Center
-            )
+            AppButton(onClick = onBack) {
+                Text(
+                    "Back to Main Menu",
+                    style = MaterialTheme.typography.labelLarge,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun LogScreenPreview() {
-    RapidrecallTheme {
-        LogScreen(
-            attempts = listOf(Attempt(3, "123", "123", true, 0L)),
-            onBack = {}
-        )
-    }
-}
 
 @Composable
 fun AttemptItemRow(attempt: Attempt) {
     val formattedTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         .format(Date(attempt.timestamp))
 
-    // Green for a win, red for a loss
     val background = if (attempt.correct) Color(0xFFC8E6C9) else Color(0xFFFFCDD2)
 
     Card(

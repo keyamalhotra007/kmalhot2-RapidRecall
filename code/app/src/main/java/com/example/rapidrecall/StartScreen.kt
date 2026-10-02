@@ -41,20 +41,22 @@ fun AppButton(
     )
 }
 
-@Composable
-fun StartScreen(
-    onStartGame: () -> Unit,
-    onShowLog: () -> Unit,
-    onShowSummary: () -> Unit
-) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
+class StartScreen {
+    @Composable
+    fun Content(
+        onStartGame: () -> Unit,
+        onShowLog: () -> Unit,
+        onShowSummary: () -> Unit
     ) {
-        Text("Rapid Recall", style = MaterialTheme.typography.headlineLarge, textAlign = TextAlign.Center)
-        AppButton(onClick = onStartGame) { Text("Start", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
-        AppButton(onClick = onShowLog) { Text("Log", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
-        AppButton(onClick = onShowSummary) { Text("Attempt Summary", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Rapid Recall", style = MaterialTheme.typography.headlineLarge, textAlign = TextAlign.Center)
+            AppButton(onClick = onStartGame) { Text("Start", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
+            AppButton(onClick = onShowLog) { Text("Log", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
+            AppButton(onClick = onShowSummary) { Text("Attempt Summary", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
+        }
     }
 }

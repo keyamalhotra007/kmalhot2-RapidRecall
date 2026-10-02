@@ -12,16 +12,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
-@Composable
-fun SummaryScreen(session: GameSession, onBack: () -> Unit) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Total Attempts: ${session.total}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
-        Text("Correct Attempts: ${session.correct}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
-        Text("Accuracy: ${session.accuracy}%", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
-        AppButton(onClick = onBack) { Text("Back to Main Menu", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
+class SummaryScreen {
+    @Composable
+    fun Content(session: GameSession, onBack: () -> Unit) {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Total Attempts: ${session.total}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+            Text("Correct Attempts: ${session.correct}", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+            Text("Accuracy: ${session.accuracy}%", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
+            AppButton(onClick = onBack) { Text("Back to Main Menu", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
+        }
     }
 }

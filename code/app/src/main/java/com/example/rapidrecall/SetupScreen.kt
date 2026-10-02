@@ -18,32 +18,34 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
-@Composable
-fun SetupScreen(onPlayGame: (Int) -> Unit, onBack: () -> Unit) {
-    val inputState = rememberTextFieldState()
+class SetupScreen {
+    @Composable
+    fun Content(onPlayGame: (Int) -> Unit, onBack: () -> Unit) {
+        val inputState = rememberTextFieldState()
 
-    // Read the text from the state for validation
-    val inputText = inputState.text.toString()
-    val length = inputText.toIntOrNull()
-    val isValid = length != null && length in 1..10
+        // Read the text from the state for validation
+        val inputText = inputState.text.toString()
+        val length = inputText.toIntOrNull()
+        val isValid = length != null && length in 1..10
 
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // 3. Use 'state =' instead of 'value' and 'onValueChange'
-        OutlinedTextField(
-            state = inputState,
-            textStyle = MaterialTheme.typography.bodyLarge,
-            label = { Text("Sequence length (1-10)", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), //numeric keypad
-            isError = inputText.isNotEmpty() && !isValid
-        )
+        Column(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // 3. Use 'state =' instead of 'value' and 'onValueChange'
+            OutlinedTextField(
+                state = inputState,
+                textStyle = MaterialTheme.typography.bodyLarge,
+                label = { Text("Sequence length (1-10)", style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), //numeric keypad
+                isError = inputText.isNotEmpty() && !isValid
+            )
 
-        AppButton(
-            onClick = { onPlayGame(length!!) },
-            enabled = isValid
-        ) { Text("Start Game", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
+            AppButton(
+                onClick = { onPlayGame(length!!) },
+                enabled = isValid
+            ) { Text("Start Game", style = MaterialTheme.typography.labelLarge, textAlign = TextAlign.Center) }
+        }
     }
 }
